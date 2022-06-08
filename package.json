@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/kiranadh1452/ci-test#readme",
   "devDependencies": {
+    "@playwright/test": "^1.22.2",
     "mysql2": "^2.3.3",
     "playwright": "^1.22.2"
   }

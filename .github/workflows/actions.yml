@@ -2,33 +2,32 @@ name: Playwright CI/CD
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - name: Chekout code
-      uses: actions/checkout@v3
+      - name: Chekout code
+        uses: actions/checkout@v3
 
-    - name: Start Containers 
-      run: docker-compose -f "docker-compose.yml" up -d --build
+      - name: Start Containers
+        run: docker-compose -f "docker-compose.yml" up -d --build
 
-    - name: Install node required 
-      uses: actions/setup-node@v3
-      with:
-        node-version: 14.x
+      - name: Install node required
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14.x
 
-    - name: Run a node script
-      run: node test.js
+      - name: Install dependencies
+        run: npm i
 
-    - name: Stop containers
-      if: always()
-      run: docker-compose -f "docker-compose.yml" down
+      - name: Setup database and complete joomla installation
+        run: node installJoomla.js
 
-    
-
+      - name: Stop containers
+        if: always()
+        run: docker-compose -f "docker-compose.yml" down
