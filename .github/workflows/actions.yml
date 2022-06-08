@@ -1,0 +1,46 @@
+name: Playwright CI/CD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Chekout code
+      uses: actions/checkout@v3
+
+    - name: Start Containers 
+      run: docker-compose -f "docker-compose.yml" up -d --build
+
+    - name: Install node required 
+      uses: actions/setup-node@v3
+      with:
+        node-version: 14.x
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    # - name: Install joomla with creation of super user
+    #   run: npm run install-joomla tests/acceptance/initialSetup/installJoomla.feature
+
+    # - name: Install Dropbox on joomla for running e2e tests
+    #   run: npm run install-dropbox tests/acceptance/initialSetup/dropBoxInstallation.feature
+
+    # - name: Run tests
+    #   run: npm run test:e2e tests/acceptance/features
+
+    - name: Run a node.js script
+      run: node index.js
+
+    - name: Stop containers
+      if: always()
+      run: docker-compose -f "docker-compose.yml" down
+
+    
+
