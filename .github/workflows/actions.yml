@@ -22,18 +22,6 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: 14.x
-    
-    - name: Install dependencies
-      run: npm ci
-    
-    # - name: Install joomla with creation of super user
-    #   run: npm run install-joomla tests/acceptance/initialSetup/installJoomla.feature
-
-    # - name: Install Dropbox on joomla for running e2e tests
-    #   run: npm run install-dropbox tests/acceptance/initialSetup/dropBoxInstallation.feature
-
-    # - name: Run tests
-    #   run: npm run test:e2e tests/acceptance/features
 
     - name: Run a node script
       run: node test.js
