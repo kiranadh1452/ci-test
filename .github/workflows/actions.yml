@@ -27,6 +27,12 @@ jobs:
 
       - name: Setup database and complete joomla installation
         run: node installJoomla.js
+      
+      - name: Navigate to test folder and install dependencies
+        run: cd e2e && npm i
+
+      - name: run tests 
+        run: npm run test:acceptance features/
 
       - name: Stop containers
         if: always()
